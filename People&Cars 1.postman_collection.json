@@ -1,0 +1,435 @@
+{
+	"info": {
+		"_postman_id": "cc801fe7-76eb-431e-a409-d23133b619da",
+		"name": "People&Cars 1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Cars",
+			"item": [
+				{
+					"name": "Save Car (C)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vin\":\"{{car_vin}}\",\r\n    \"brand\": \"Nissan\",\r\n    \"model\": \"Tiida\",\r\n    \"year\": 2012,\r\n    \"color\": \"Red\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/cars/:car_vin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cars",
+								":car_vin"
+							],
+							"variable": [
+								{
+									"key": "car_vin",
+									"value": "ABC-1234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Car (R)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/cars/:car_vin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cars",
+								":car_vin"
+							],
+							"variable": [
+								{
+									"key": "car_vin",
+									"value": "ABC-1234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Car (U)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vin\":\"{{car_vin}}\",\r\n    \"brand\": \"Nissan\",\r\n    \"model\": \"Tiida\",\r\n    \"year\": 2012,\r\n    \"color\": \"Red\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/cars/:car_vin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cars",
+								":car_vin"
+							],
+							"variable": [
+								{
+									"key": "car_vin",
+									"value": "ABC-1234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Car (D)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/cars/:car_vin",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cars",
+								":car_vin"
+							],
+							"variable": [
+								{
+									"key": "car_vin",
+									"value": "ABC-1234"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Cars",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/cars",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cars"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "People",
+			"item": [
+				{
+					"name": "Add Car",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"pilar\",\r\n    \"lastName\": \"canseco\",\r\n    \"email\": \"canseco.pilar@gmail.com\",\r\n    \"gender\": \"famale\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/people",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"people"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Person (R)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/people/:person_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"people",
+								":person_id"
+							],
+							"variable": [
+								{
+									"key": "person_id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All People",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/people",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"people"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Person (U)",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":\"{{person_id}}\",\r\n    \"firstName\": \"Antonio\",\r\n    \"lastName\": \"Gonzalez\",\r\n    \"email\": \"toño.gonzalez@mail.com\",\r\n    \"gender\": \"male\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/people/:person_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"people",
+								":person_id"
+							],
+							"variable": [
+								{
+									"key": "person_id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Person (D)",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/people/:person_id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"people",
+								":person_id"
+							],
+							"variable": [
+								{
+									"key": "person_id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Car",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vin\": \"9870004\",\r\n    \"brand\": \"Suzuki\",\r\n    \"model\": \"Ciaz\",\r\n    \"year\": 2022,\r\n    \"color\": \"Green\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/people/7e6adc9a-71a1-4b96-b38e-a151f6ce786e/car",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"people",
+								"7e6adc9a-71a1-4b96-b38e-a151f6ce786e",
+								"car"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Car",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"vin\": \"9870003\",\r\n    \"brand\": \"Nissan\",\r\n    \"model\": \"Tiida\",\r\n    \"year\": 1990,\r\n    \"color\": \"Blue\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/people/7e6adc9a-71a1-4b96-b38e-a151f6ce786e/car",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"people",
+								"7e6adc9a-71a1-4b96-b38e-a151f6ce786e",
+								"car"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
