@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class PeopleService implements ServiceDef<People> {
@@ -34,6 +35,7 @@ public class PeopleService implements ServiceDef<People> {
 
     @Override
     public People create(People person) {
+        person.setId(UUID.randomUUID().toString());
         return peopleRepository.save(person);
     }
 

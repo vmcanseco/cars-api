@@ -1,7 +1,9 @@
 package com.javatraining.springboot.carsapi.controller;
 
+import com.javatraining.springboot.carsapi.dto.CarDTO;
 import com.javatraining.springboot.carsapi.model.Car;
 import com.javatraining.springboot.carsapi.service.ServiceDef;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,32 +11,42 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api")
 public class CarController {
 
-    @Autowired
+    private final
     ServiceDef<Car> carService;
 
+    private final
+    ModelMapper modelMapper;
+
+    public CarController(@Autowired ServiceDef<Car> carService, @Autowired ModelMapper modelMapper) {
+        this.carService = carService;
+        this.modelMapper = modelMapper;
+    }
+
     @GetMapping("/cars")
-    public ResponseEntity<List<Car>> getAllCars(){
-        return new ResponseEntity<>(carService.getAll(), HttpStatus.OK);
+    public ResponseEntity<List<CarDTO>> getAllCars(){
+        List<CarDTO> cars = carService.getAll().stream().map(car->modelMapper.map(car, CarDTO.class)).collect(Collectors.toList());
+        return new ResponseEntity<>(cars, HttpStatus.OK);
     }
 
     @GetMapping("/cars/{car_vin}")
-    public ResponseEntity<Car> getCarByVin(@PathVariable("car_vin") String carVin){
+    public ResponseEntity<CarDTO> getCarByVin(@PathVariable("car_vin") String carVin){
         try{
-            return new ResponseEntity<>(carService.findById((carVin)), HttpStatus.OK);
+            return new ResponseEntity<>(modelMapper.map(carService.findById((carVin)),CarDTO.class), HttpStatus.OK);
         }catch(NoSuchElementException ex){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping("/cars")
-    public ResponseEntity createCar(@RequestBody Car car){
+    public ResponseEntity createCar(@RequestBody CarDTO car){
         try {
-            return new ResponseEntity<>(carService.create(car),HttpStatus.CREATED);
+            return new ResponseEntity<>(modelMapper.map(carService.create(modelMapper.map(car,Car.class)),CarDTO.class),HttpStatus.CREATED);
         }catch (Exception ex){
             return ResponseEntity.internalServerError().body("Unexpected error when creating car");
         }
@@ -42,9 +54,9 @@ public class CarController {
     }
 
     @PutMapping("/cars/{car_vin}")
-    public ResponseEntity<Car> updatePerson(@PathVariable("car_vin")String carVin,@RequestBody Car car){
+    public ResponseEntity<CarDTO> updatePerson(@PathVariable("car_vin")String carVin,@RequestBody CarDTO car){
         try{
-            return new ResponseEntity<>(carService.update(carVin,car),HttpStatus.OK);
+            return new ResponseEntity<>(modelMapper.map(carService.update(carVin,modelMapper.map(car,Car.class)),CarDTO.class),HttpStatus.OK);
 
         }catch(NoSuchElementException ex){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

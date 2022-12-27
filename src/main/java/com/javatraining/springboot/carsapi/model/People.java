@@ -15,7 +15,7 @@ public class People {
     @Id
     @Column(name = "person_id",unique = true,updatable = false)
     @EqualsAndHashCode.Include()
-    private String id = UUID.randomUUID().toString();
+    private String id;
 
     @Column(name="firstName")
     private String firstName;
