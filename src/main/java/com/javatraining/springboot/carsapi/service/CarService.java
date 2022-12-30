@@ -10,14 +10,16 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
-public class CarService implements ServiceDef<Car>{
-    @Autowired
-    private CarRepository carRepository;
+public class CarService implements CarServiceDef{
+    private final CarRepository carRepository;
+
+    public CarService(@Autowired CarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
 
     @Override
     public List<Car> getAll() {
-        List<Car> cars = carRepository.findAll();
-        return cars;
+        return carRepository.findAll();
     }
 
     @Override

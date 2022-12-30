@@ -13,18 +13,20 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class PeopleService implements ServiceDef<People> {
+public class PeopleService implements PeopleServiceDef {
 
-    @Autowired
-    private PeopleRepository peopleRepository;
+    private final PeopleRepository peopleRepository;
 
-    @Autowired
-    private CarRepository carRepository;
+    private final CarRepository carRepository;
+
+    public PeopleService(@Autowired PeopleRepository peopleRepository, @Autowired CarRepository carRepository) {
+        this.peopleRepository = peopleRepository;
+        this.carRepository = carRepository;
+    }
 
     @Override
     public List<People> getAll() {
-        List<People> people = peopleRepository.findAll();
-        return people;
+        return peopleRepository.findAll();
     }
 
     @Override
@@ -65,6 +67,7 @@ public class PeopleService implements ServiceDef<People> {
         }
     }
 
+    @Override
     public People addCar(String personId, Car car) {
         People savedPerson = peopleRepository.findById(personId).map(person -> {
             String vin = car.getVin();
@@ -81,6 +84,7 @@ public class PeopleService implements ServiceDef<People> {
         return savedPerson;
     }
 
+    @Override
     public People removeCar(String personId, Car car) {
         People savedPerson;
         savedPerson = peopleRepository.findById(personId).map(person -> {

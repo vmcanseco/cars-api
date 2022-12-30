@@ -1,6 +1,6 @@
 package com.javatraining.springboot.carsapi.controller;
 
-import com.javatraining.springboot.carsapi.DTOConverter;
+import com.javatraining.springboot.carsapi.converters.DTOConverter;
 import com.javatraining.springboot.carsapi.dto.CarDTO;
 import com.javatraining.springboot.carsapi.dto.PeopleDTO;
 import com.javatraining.springboot.carsapi.service.PeopleService;

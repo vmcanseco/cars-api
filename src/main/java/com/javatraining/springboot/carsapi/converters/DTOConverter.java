@@ -1,4 +1,4 @@
-package com.javatraining.springboot.carsapi;
+package com.javatraining.springboot.carsapi.converters;
 
 import com.javatraining.springboot.carsapi.dto.CarDTO;
 import com.javatraining.springboot.carsapi.dto.PeopleDTO;
