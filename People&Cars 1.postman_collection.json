@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "cc801fe7-76eb-431e-a409-d23133b619da",
+		"_postman_id": "e890a53f-52af-4fb6-941a-808f4ca4c692",
 		"name": "People&Cars 1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -183,7 +183,7 @@
 			"name": "People",
 			"item": [
 				{
-					"name": "Add Car",
+					"name": "Create Person",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -397,6 +397,82 @@
 								"people",
 								"7e6adc9a-71a1-4b96-b38e-a151f6ce786e",
 								"car"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Person Cars",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/people/:person_id/cars",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"people",
+								":person_id",
+								"cars"
+							],
+							"variable": [
+								{
+									"key": "person_id",
+									"value": "5cb25458-afd0-4845-935d-d5f3097d2573"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All People",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/cars/:car_vin/people",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"cars",
+								":car_vin",
+								"people"
+							],
+							"variable": [
+								{
+									"key": "car_vin",
+									"value": "ABC-1234"
+								}
 							]
 						}
 					},

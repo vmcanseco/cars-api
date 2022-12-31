@@ -1,7 +1,9 @@
 package com.javatraining.springboot.carsapi.service;
 
 import com.javatraining.springboot.carsapi.model.Car;
+import com.javatraining.springboot.carsapi.model.People;
 import com.javatraining.springboot.carsapi.repository.CarRepository;
+import com.javatraining.springboot.carsapi.repository.PeopleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,11 @@ import java.util.Optional;
 @Service
 public class CarService implements CarServiceDef{
     private final CarRepository carRepository;
+    private final PeopleRepository peopleRepository;
 
-    public CarService(@Autowired CarRepository carRepository) {
+    public CarService(CarRepository carRepository, PeopleRepository peopleRepository) {
         this.carRepository = carRepository;
+        this.peopleRepository = peopleRepository;
     }
 
     @Override
@@ -58,5 +62,10 @@ public class CarService implements CarServiceDef{
             throw new NoSuchElementException("Not car found with VIN: "+vin);
         }
 
+    }
+
+    @Override
+    public List<People> getAllPeople(Car car) {
+        return peopleRepository.findAllByCars(car);
     }
 }

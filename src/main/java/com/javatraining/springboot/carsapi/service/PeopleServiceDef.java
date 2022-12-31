@@ -20,4 +20,5 @@ public interface PeopleServiceDef {
     People addCar(String personId, Car car);
 
     People removeCar(String personId, Car car);
+    List<Car> getAllCars(People person);
 }

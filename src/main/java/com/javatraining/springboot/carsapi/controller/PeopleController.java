@@ -3,8 +3,9 @@ package com.javatraining.springboot.carsapi.controller;
 import com.javatraining.springboot.carsapi.converters.DTOConverter;
 import com.javatraining.springboot.carsapi.dto.CarDTO;
 import com.javatraining.springboot.carsapi.dto.PeopleDTO;
-import com.javatraining.springboot.carsapi.service.PeopleService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.javatraining.springboot.carsapi.model.People;
+import com.javatraining.springboot.carsapi.service.CarServiceDef;
+import com.javatraining.springboot.carsapi.service.PeopleServiceDef;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +18,14 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class PeopleController {
 
-    private final
-    PeopleService peopleService;
+    private final PeopleServiceDef peopleService;
+
+    private final CarServiceDef carServiceDef;
 
 
-    public PeopleController(@Autowired PeopleService peopleService) {
+    public PeopleController(PeopleServiceDef peopleService, CarServiceDef carServiceDef) {
         this.peopleService = peopleService;
+        this.carServiceDef = carServiceDef;
     }
 
     @GetMapping("/people")
@@ -40,6 +43,16 @@ public class PeopleController {
         }catch(NoSuchElementException ex){
            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/people/{person_id}/cars")
+    public ResponseEntity<List<CarDTO>> getPersonCars(@PathVariable("person_id") String personId){
+            People person = new People();
+            person.setId(personId);
+            return new ResponseEntity<>(peopleService.getAllCars(person)
+                    .stream()
+                    .map(DTOConverter::toCarDTO)
+                    .collect(Collectors.toList()), HttpStatus.OK);
     }
 
     @PostMapping("/people")

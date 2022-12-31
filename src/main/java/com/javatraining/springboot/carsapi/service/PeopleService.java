@@ -97,4 +97,11 @@ public class PeopleService implements PeopleServiceDef {
         }).orElseThrow(() -> new NoSuchElementException("Not found person with Id: " + personId));
         return savedPerson;
     }
+
+    @Override
+    public List<Car> getAllCars(People person) {
+        return carRepository.findAllByPeople(person);
+    }
+
+
 }

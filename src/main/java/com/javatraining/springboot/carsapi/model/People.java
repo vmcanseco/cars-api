@@ -1,5 +1,6 @@
 package com.javatraining.springboot.carsapi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Type;
 
@@ -29,6 +30,8 @@ public class People {
     @Column(name = "gender")
     private String gender;
 
+
+    @JsonIgnore
     @ManyToMany(
             fetch = FetchType.LAZY,
             cascade = {

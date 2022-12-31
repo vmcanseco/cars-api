@@ -1,7 +1,9 @@
 package com.javatraining.springboot.carsapi.controller;
 
 import com.javatraining.springboot.carsapi.dto.CarDTO;
+import com.javatraining.springboot.carsapi.dto.PeopleDTO;
 import com.javatraining.springboot.carsapi.model.Car;
+import com.javatraining.springboot.carsapi.model.People;
 import com.javatraining.springboot.carsapi.service.CarServiceDef;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -69,5 +71,15 @@ public class CarController {
         } catch (NoSuchElementException ex) {
             return ResponseEntity.internalServerError().body(ex.getMessage());
         }
+    }
+
+    @GetMapping("/cars/{car_vin}/people")
+    public ResponseEntity<List<PeopleDTO>> getAllPeople(@PathVariable("car_vin") String carVin) {
+            Car car = new Car();
+            car.setVin(carVin);
+            return new ResponseEntity<>(carService.getAllPeople(car)
+                    .stream()
+                    .map(person->modelMapper.map(person,PeopleDTO.class))
+                    .collect(Collectors.toList()), HttpStatus.OK);
     }
 }

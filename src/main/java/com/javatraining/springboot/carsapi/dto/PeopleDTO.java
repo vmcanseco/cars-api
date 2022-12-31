@@ -15,5 +15,5 @@ public class PeopleDTO {
     private String lastName;
     private String gender;
     private String email;
-    private Set<CarDTO> cars;
+    //private Set<CarDTO> cars;
 }

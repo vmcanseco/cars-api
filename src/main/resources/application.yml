@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://127.0.0.1:5432/cars_db
     username: postgres
-    password: ${PWD:postgrespw}
+    password: postgrespw
     driver-class-name: org.postgresql.Driver
   jpa:
     properties:
