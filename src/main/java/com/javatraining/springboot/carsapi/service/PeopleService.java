@@ -54,7 +54,7 @@ public class PeopleService implements PeopleServiceDef {
             updatedPerson.setCars(person.getCars());
             return peopleRepository.save(updatedPerson);
         } else {
-            throw new NoSuchElementException("Person not found");
+            throw new NoSuchElementException("Not person found with Id: "+personId);
         }
     }
 
@@ -80,7 +80,7 @@ public class PeopleService implements PeopleServiceDef {
                 return peopleRepository.save(person);
             }
 
-        }).orElseThrow(() -> new NoSuchElementException("Not found person with Id: " + personId));
+        }).orElseThrow(() -> new NoSuchElementException("Not person found with Id: " + personId));
         return savedPerson;
     }
 
@@ -100,7 +100,12 @@ public class PeopleService implements PeopleServiceDef {
 
     @Override
     public List<Car> getAllCars(People person) {
-        return carRepository.findAllByPeople(person);
+        if (peopleRepository.existsById(person.getId())){
+            return carRepository.findAllByPeople(person);
+        }else {
+            throw new NoSuchElementException("Not person found with Id: "+person.getId());
+        }
+
     }
 
 

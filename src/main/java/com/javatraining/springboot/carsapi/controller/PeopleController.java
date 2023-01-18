@@ -45,14 +45,18 @@ public class PeopleController {
         }
     }
 
-    @GetMapping("/people/{person_id}/cars")
+    @GetMapping("/people/{person_id}/car")
     public ResponseEntity<List<CarDTO>> getPersonCars(@PathVariable("person_id") String personId){
+        try{
             People person = new People();
             person.setId(personId);
             return new ResponseEntity<>(peopleService.getAllCars(person)
                     .stream()
                     .map(DTOConverter::toCarDTO)
                     .collect(Collectors.toList()), HttpStatus.OK);
+        }catch(NoSuchElementException ex){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping("/people")
@@ -82,13 +86,14 @@ public class PeopleController {
           peopleService.delete(personId);
           return new ResponseEntity<>(HttpStatus.NO_CONTENT);
       }catch (NoSuchElementException ex){
-          return ResponseEntity.internalServerError().body(ex.getMessage());
+          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
       }
     }
     @PostMapping("/people/{person_id}/car")
-        public ResponseEntity<PeopleDTO> addCar(@PathVariable("person_id") String personId,@RequestBody CarDTO car){
+        public ResponseEntity addCar(@PathVariable("person_id") String personId,@RequestBody CarDTO car){
             try{
-                return new ResponseEntity<>(DTOConverter.toPeopleDTO(peopleService.addCar(personId,DTOConverter.toCar(car))),HttpStatus.OK);
+                peopleService.addCar(personId,DTOConverter.toCar(car));
+                return new ResponseEntity<>(HttpStatus.OK);
             }catch (NoSuchElementException ex){
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
@@ -96,12 +101,12 @@ public class PeopleController {
     }
 
     @DeleteMapping("/people/{person_id}/car")
-    public ResponseEntity<PeopleDTO> removeCar(@PathVariable("person_id") String personId,@RequestBody CarDTO car){
+    public ResponseEntity removeCar(@PathVariable("person_id") String personId,@RequestBody CarDTO car){
         try{
-            return new ResponseEntity<>(DTOConverter.toPeopleDTO(peopleService.removeCar(personId,DTOConverter.toCar(car))),HttpStatus.NO_CONTENT);
+            peopleService.removeCar(personId,DTOConverter.toCar(car));
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (NoSuchElementException ex){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
         }
     }
 }
