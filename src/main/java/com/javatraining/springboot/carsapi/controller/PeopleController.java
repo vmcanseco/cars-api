@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-@RestController
-@RequestMapping("/api")
+//@RestController
+//@RequestMapping("/api")
 public class PeopleController {
 
     private final PeopleServiceDef peopleService;
@@ -28,7 +28,7 @@ public class PeopleController {
         this.carServiceDef = carServiceDef;
     }
 
-    @GetMapping("/people")
+    //@GetMapping("/people")
     public ResponseEntity<List<PeopleDTO>> getAllPeople(){
         List<PeopleDTO> people = peopleService.getAll().stream()
                 .map(DTOConverter::toPeopleDTO)
@@ -36,7 +36,7 @@ public class PeopleController {
         return new ResponseEntity<>(people, HttpStatus.OK);
     }
 
-    @GetMapping("/people/{person_id}")
+    //@GetMapping("/people/{person_id}")
     public ResponseEntity<PeopleDTO> getPersonById(@PathVariable("person_id") String personId){
         try{
            return new ResponseEntity<>(DTOConverter.toPeopleDTO(peopleService.findById(personId)), HttpStatus.OK);
@@ -45,7 +45,7 @@ public class PeopleController {
         }
     }
 
-    @GetMapping("/people/{person_id}/cars")
+    //@GetMapping("/people/{person_id}/cars")
     public ResponseEntity<List<CarDTO>> getPersonCars(@PathVariable("person_id") String personId){
             People person = new People();
             person.setId(personId);
@@ -55,7 +55,7 @@ public class PeopleController {
                     .collect(Collectors.toList()), HttpStatus.OK);
     }
 
-    @PostMapping("/people")
+    //@PostMapping("/people")
     public ResponseEntity createPerson(@RequestBody PeopleDTO person){
         try {
            return new ResponseEntity<>(DTOConverter.toPeopleDTO(peopleService.create(DTOConverter.toPeople(person))),HttpStatus.CREATED);
@@ -65,7 +65,7 @@ public class PeopleController {
 
     }
 
-    @PutMapping("/people/{person_id}")
+    //@PutMapping("/people/{person_id}")
     public ResponseEntity<PeopleDTO> updatePerson(@PathVariable("person_id")String personId,@RequestBody PeopleDTO person){
        try{
            return new ResponseEntity<>(DTOConverter.toPeopleDTO(peopleService.update(personId,DTOConverter.toPeople(person))),HttpStatus.OK);
@@ -75,7 +75,7 @@ public class PeopleController {
        }
     }
 
-    @DeleteMapping("/people/{person_id}")
+    //@DeleteMapping("/people/{person_id}")
     public  ResponseEntity deletePerson(@PathVariable("person_id")String personId){
 
       try{
@@ -85,7 +85,7 @@ public class PeopleController {
           return ResponseEntity.internalServerError().body(ex.getMessage());
       }
     }
-    @PostMapping("/people/{person_id}/car")
+    //@PostMapping("/people/{person_id}/car")
         public ResponseEntity<PeopleDTO> addCar(@PathVariable("person_id") String personId,@RequestBody CarDTO car){
             try{
                 return new ResponseEntity<>(DTOConverter.toPeopleDTO(peopleService.addCar(personId,DTOConverter.toCar(car))),HttpStatus.OK);
@@ -95,7 +95,7 @@ public class PeopleController {
         }
     }
 
-    @DeleteMapping("/people/{person_id}/car")
+    //@DeleteMapping("/people/{person_id}/car")
     public ResponseEntity<PeopleDTO> removeCar(@PathVariable("person_id") String personId,@RequestBody CarDTO car){
         try{
             return new ResponseEntity<>(DTOConverter.toPeopleDTO(peopleService.removeCar(personId,DTOConverter.toCar(car))),HttpStatus.NO_CONTENT);

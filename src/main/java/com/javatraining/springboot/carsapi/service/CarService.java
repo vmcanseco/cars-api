@@ -1,5 +1,6 @@
 package com.javatraining.springboot.carsapi.service;
 
+import com.javatraining.springboot.carsapi.exceptions.GenericException;
 import com.javatraining.springboot.carsapi.model.Car;
 import com.javatraining.springboot.carsapi.model.People;
 import com.javatraining.springboot.carsapi.repository.CarRepository;
@@ -29,12 +30,20 @@ public class CarService implements CarServiceDef{
     @Override
     public Car findById(String vin) {
         Optional<Car> car = carRepository.findById(vin);
-        return car.get();
+        try {
+            return car.get();
+        }catch (NoSuchElementException ex){
+            throw new GenericException(404,"Not car found with VIN: "+vin);
+        }
     }
 
     @Override
     public Car create(Car car) {
-        return carRepository.save(car);
+        try{
+            return carRepository.save(car);
+        }catch (Exception ex){
+            throw new GenericException(500,"Unexpected error when creating car");
+        }
     }
 
     @Override
@@ -50,7 +59,7 @@ public class CarService implements CarServiceDef{
             return carRepository.save(updatedCar);
 
         }else{
-            throw new NoSuchElementException("Not car found with VIN: "+car.getVin());
+            throw new GenericException(404,"Not car found with VIN: "+car.getVin());
         }
     }
 
@@ -59,13 +68,17 @@ public class CarService implements CarServiceDef{
         if (carRepository.existsById(vin)){
             carRepository.deleteById(vin);
         }else{
-            throw new NoSuchElementException("Not car found with VIN: "+vin);
+            throw new GenericException(404,"Not car found with VIN: "+vin);
         }
 
     }
 
     @Override
     public List<People> getAllPeople(Car car) {
-        return peopleRepository.findAllByCars(car);
+        if (carRepository.existsById(car.getVin())) {
+            return peopleRepository.findAllByCars(car);
+        }else{
+            throw new GenericException(404,"Not car found with VIN: "+car.getVin());
+        }
     }
 }

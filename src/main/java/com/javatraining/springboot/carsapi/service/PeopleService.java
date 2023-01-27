@@ -1,5 +1,6 @@
 package com.javatraining.springboot.carsapi.service;
 
+import com.javatraining.springboot.carsapi.exceptions.GenericException;
 import com.javatraining.springboot.carsapi.model.Car;
 import com.javatraining.springboot.carsapi.model.People;
 import com.javatraining.springboot.carsapi.repository.CarRepository;
@@ -32,7 +33,11 @@ public class PeopleService implements PeopleServiceDef {
     @Override
     public People findById(String personId) {
         Optional<People> person = peopleRepository.findById(personId);
-        return person.get();
+        if (person.isPresent()){
+            return person.get();
+        }else{
+            throw new GenericException(404,"Not person found with Id: "+personId);
+        }
     }
 
     @Override
@@ -54,7 +59,7 @@ public class PeopleService implements PeopleServiceDef {
             updatedPerson.setCars(person.getCars());
             return peopleRepository.save(updatedPerson);
         } else {
-            throw new NoSuchElementException("Person not found");
+            throw new GenericException(404,"Not person found with Id: "+personId);
         }
     }
 
@@ -63,25 +68,24 @@ public class PeopleService implements PeopleServiceDef {
         if (peopleRepository.existsById(personId)){
             peopleRepository.deleteById(personId);
         }else {
-            throw new NoSuchElementException("Not person found with Id: "+personId);
+            throw new GenericException(404,"Not person found with Id: "+personId);
         }
     }
 
     @Override
     public People addCar(String personId, Car car) {
-        People savedPerson = peopleRepository.findById(personId).map(person -> {
+        return peopleRepository.findById(personId).map(person -> {
             String vin = car.getVin();
             Optional<Car> foundCar = carRepository.findById(vin);
             if (foundCar.isPresent()) {
                 person.addCar(foundCar.get());
-                return peopleRepository.save(person);
             } else {
                 person.addCar(car);
-                return peopleRepository.save(person);
             }
+            return peopleRepository.save(person);
 
-        }).orElseThrow(() -> new NoSuchElementException("Not found person with Id: " + personId));
-        return savedPerson;
+        }).orElseThrow(() ->  new GenericException(404,"Not person found with Id: "+personId));
+        //return savedPerson;
     }
 
     @Override
@@ -94,13 +98,17 @@ public class PeopleService implements PeopleServiceDef {
             person.removeCar(foundCar);
             return peopleRepository.save(person);
 
-        }).orElseThrow(() -> new NoSuchElementException("Not found person with Id: " + personId));
+        }).orElseThrow(() ->  new GenericException(404,"Not person found with Id: "+personId));
         return savedPerson;
     }
 
     @Override
     public List<Car> getAllCars(People person) {
-        return carRepository.findAllByPeople(person);
+        if (peopleRepository.existsById(person.getId())) {
+            return carRepository.findAllByPeople(person);
+        }else {
+            throw new GenericException(404,"Not person found with Id: "+person.getId());
+        }
     }
 
 
