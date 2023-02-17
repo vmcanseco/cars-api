@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-@RestController
-@RequestMapping("/api")
+//@RestController
+//@RequestMapping("/api")
 public class CarController {
 
     private final CarServiceDef carService;
@@ -27,13 +27,13 @@ public class CarController {
         this.modelMapper = modelMapper;
     }
 
-    @GetMapping("/cars")
+    //@GetMapping("/cars")
     public ResponseEntity<List<CarDTO>> getAllCars() {
         List<CarDTO> cars = carService.getAll().stream().map(car -> modelMapper.map(car, CarDTO.class)).collect(Collectors.toList());
         return new ResponseEntity<>(cars, HttpStatus.OK);
     }
 
-    @GetMapping("/cars/{car_vin}")
+    //@GetMapping("/cars/{car_vin}")
     public ResponseEntity<CarDTO> getCarByVin(@PathVariable("car_vin") String carVin) {
         try {
             return new ResponseEntity<>(modelMapper.map(carService.findById((carVin)), CarDTO.class), HttpStatus.OK);
@@ -42,7 +42,7 @@ public class CarController {
         }
     }
 
-    @PostMapping("/cars")
+    //@PostMapping("/cars")
     public ResponseEntity createCar(@RequestBody CarDTO car) {
         try {
             return new ResponseEntity<>(modelMapper.map(carService.create(modelMapper.map(car, Car.class)), CarDTO.class), HttpStatus.CREATED);
@@ -52,7 +52,7 @@ public class CarController {
 
     }
 
-    @PutMapping("/cars/{car_vin}")
+    //@PutMapping("/cars/{car_vin}")
     public ResponseEntity<CarDTO> updateCar(@PathVariable("car_vin") String carVin, @RequestBody CarDTO car) {
         try {
             return new ResponseEntity<>(modelMapper.map(carService.update(carVin, modelMapper.map(car, Car.class)), CarDTO.class), HttpStatus.OK);
@@ -62,7 +62,7 @@ public class CarController {
         }
     }
 
-    @DeleteMapping("/cars/{car_vin}")
+    //@DeleteMapping("/cars/{car_vin}")
     public ResponseEntity deleteCar(@PathVariable("car_vin") String carVin) {
 
         try {
@@ -73,7 +73,7 @@ public class CarController {
         }
     }
 
-    @GetMapping("/cars/{car_vin}/people")
+    //@GetMapping("/cars/{car_vin}/people")
     public ResponseEntity<List<PeopleDTO>> getAllPeople(@PathVariable("car_vin") String carVin) {
             Car car = new Car();
             car.setVin(carVin);
